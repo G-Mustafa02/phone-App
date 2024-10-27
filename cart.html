@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(5, 5, 46);
+            
+        }
+        .head{
+            color: white;
+            text-align: center;
+        }
+        .usercart{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card{
+            border: 1px solid black;
+            background-color: rgb(214, 234, 236);
+            width: 20%;
+            text-align: center;
+            padding: 20px;
+        }
+</style>
+<body>
+    <h1 class="head">User Cart</h1>
+    <div class="usercart">
+
+    </div>
+
+    <script>
+        var data = localStorage.getItem("cart")
+        var convert = JSON.parse(data)
+        var usercart = document.querySelector(".usercart")
+        convert.map((items)=>{
+            usercart.innerHTML +=   `<div class="card">
+                <h1>${items.brand}    ${items.model}</h1>
+                <h3>ram : ${items.ram} / rom :${items.rom} </h3>
+                <h3>camera : ${items.camera}</h3>
+                <h2>price $ ${items.price}</h2>
+                
+            </div>`
+            
+        })
+    </script>
+</body>
+</html>
