@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(5, 5, 46);
+            
+        }
+        .head{
+            color: white;
+            text-align: center;
+        }
+        .usercart{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card{
+            border: 1px solid black;
+            background-color: rgb(214, 234, 236);
+            width: 20%;
+            text-align: center;
+            padding: 20px;
+        }
+</style>
+<body>
+    <h1 class="head">User Cart</h1>
+    <div class="usercart">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var data = localStorage.getItem("cart")
+        var convert = JSON.parse(data)
+        var usercart = document.querySelector(".usercart")
+        convert.map((items, index)=>{
+            usercart.innerHTML +=   `<div class="card">
+                <h1>${items.brand}    ${items.model}</h1>
+                <h3>ram : ${items.ram} / rom :${items.rom} </h3>
+                <h3>camera : ${items.camera}</h3>
+                <h2>price $ ${items.price}</h2>
+
+                <div class="quantity">
+                    <button onclick="plus(${index}, ${items.price})">+</button>
+                    <p id="qun-num-${index}">${items.quantity}</p>
+                    <button onclick="minus(${index}, ${items.price})">-</button>
+                </div>
+
+                <h2 id="price-${index}">price $ ${items.price * items.quantity}</h2>
+
+                <button onclick="buynow()">Buy Now</button>
+                <button onclick="delBtn()">Delete</button>
+            </div>`
+            
+        })
+
+        function plus(index, price) {
+  let quantityElem = document.querySelector(`#qun-num-${index}`);
+  let priceElem = document.querySelector(`#price-${index}`);
+  quantityElem.innerHTML++;
+  priceElem.innerHTML = `Price $${price * quantityElem.innerHTML}`;
+}
+
+function minus(index, price) {
+  let quantityElem = document.querySelector(`#qun-num-${index}`);
+  let priceElem = document.querySelector(`#price-${index}`);
+  if (quantityElem.innerHTML > '1') {
+    quantityElem.innerHTML--;
+    priceElem.innerHTML = `Price $${price * quantityElem.innerHTML}`;
+  }
+}
+function buynow() {
+  Swal.fire("Your Order Has Been  Placed");
+}
+
+
+function delBtn(index) {
+    convert.splice(index, 1);
+    usercart.innerHTML = "";
+    convert.map((items, index)=>{
+            usercart.innerHTML +=   `<div class="card">
+                <h1>${items.brand}    ${items.model}</h1>
+                <h3>ram : ${items.ram} / rom :${items.rom} </h3>
+                <h3>camera : ${items.camera}</h3>
+                <h2>price $ ${items.price}</h2>
+
+                <div class="quantity">
+                    <button onclick="plus(${index}, ${items.price})">+</button>
+                    <p id="qun-num-${index}">${items.quantity}</p>
+                    <button onclick="minus(${index}, ${items.price})">-</button>
+                </div>
+
+                <h2 id="price-${index}">price $ ${items.price * items.quantity}</h2>
+
+                <button onclick="buynow()">Buy Now</button>
+                <button onclick="delBtn()">Delete</button>
+            </div>`
+            
+        })
+    }
+
+    
+    </script>
+</body>
+</html>
